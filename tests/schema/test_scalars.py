@@ -375,6 +375,10 @@ def test_decimal():
         def decimal(value: Decimal) -> Decimal:
             return value
 
+        @strawberry.field
+        def divide(a: Decimal, b: Decimal) -> Decimal:
+            return a / b
+
     schema = strawberry.Schema(query=Query)
 
     result = schema.execute_sync(
@@ -385,6 +389,7 @@ def test_decimal():
             floatDecimal3: decimal(value: 0.000001)
             stringDecimal: decimal(value: "3.14")
             stringDecimal2: decimal(value: "3.1499999991")
+            scientificDecimal: decimal(a: "1", b: "100000000")
         }
     """
     )
@@ -396,6 +401,7 @@ def test_decimal():
         "floatDecimal3": "0.000001",
         "stringDecimal": "3.14",
         "stringDecimal2": "3.1499999991",
+        "scientificDecimal": "0.00000001",
     }
 
 

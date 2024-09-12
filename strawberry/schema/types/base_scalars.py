@@ -27,6 +27,10 @@ def parse_decimal(value: object) -> decimal.Decimal:
         raise GraphQLError(f'Value cannot represent a Decimal: "{value}".')
 
 
+def serialize_decimal(value: decimal.Decimal) -> str:
+    return str(value)
+
+
 isoformat = methodcaller("isoformat")
 
 
@@ -56,7 +60,7 @@ Decimal = scalar(
     decimal.Decimal,
     name="Decimal",
     description="Decimal (fixed-point)",
-    serialize=str,
+    serialize=serialize_decimal,
     parse_value=parse_decimal,
 )
 
